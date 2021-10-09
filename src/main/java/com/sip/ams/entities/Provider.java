@@ -10,6 +10,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Size;
 
  
 @Entity
@@ -18,6 +19,7 @@ public class Provider {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
     @NotBlank(message = "Name is mandatory")
+    @Size(min=3,max=15)
     @Column(name = "name")
     private String name;
     @NotBlank(message = "Address is mandatory")
