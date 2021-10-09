@@ -34,9 +34,10 @@ public class ProviderController {
 	List<Provider> lp = (List<Provider>)providerRepository.findAll();
 	//System.out.println("list lp"+lp);
 	//System.out.println("Taille list lp"+lp.size());
+	//pour verifier le formulaire no Providers Yet pour l afficher
 	if(lp.size()==0)
 	    lp=null;
-	model.addAttribute("providers", providerRepository.findAll());
+	model.addAttribute("providers", lp);
 	return "provider/listProviders";
     }
 

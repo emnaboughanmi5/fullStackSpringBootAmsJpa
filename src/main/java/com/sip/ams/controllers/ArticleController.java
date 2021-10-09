@@ -4,6 +4,8 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.Date;
+import java.util.List;
 
 import javax.validation.Valid;
 
@@ -41,7 +43,10 @@ public class ArticleController {
     @GetMapping("list")
     public String listProviders(Model model) {
 	// model.addAttribute("articles", null);
-	model.addAttribute("articles", articleRepository.findAll());
+	List<Article> la = (List<Article>)articleRepository.findAll();
+ 	if(la.size()==0)
+	    la=null;
+	model.addAttribute("articles", la);
 	return "article/listArticles";
     }
 
@@ -93,12 +98,16 @@ public class ArticleController {
     }
 
     @GetMapping("delete/{id}")
-    public String deleteProvider(@PathVariable("id") long id, Model model) {
+    public String deleteArticle(@PathVariable("id") long id, Model model) {
 	Article artice = articleRepository.findById(id)
 		.orElseThrow(() -> new IllegalArgumentException("Invalid provider Id:" + id));
 	articleRepository.delete(artice);
-	model.addAttribute("articles", articleRepository.findAll());
-	return "article/listArticles";
+	
+	//model.addAttribute("articles", articleRepository.findAll());//il faut rechargrer la liste avec les nouveles valeurs
+	
+	//return "article/listArticles";
+	//il affiche un id dans url de l'element à supprimer douu on utilise redirect
+	return "redirect:../list";
     }
 
     @GetMapping("edit/{id}")
